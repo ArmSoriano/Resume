@@ -101,6 +101,7 @@
       max-width: 1000px;
       margin: 0 auto;
       padding: 0 48px;
+      position: relative;
     }
 
     .section-heading {
@@ -214,15 +215,27 @@
       100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
     }
 
-    /* ── SKILLS ── */
+    /* ── SKILLS  (section 1 — light bg, green accent) ── */
     #skills {
       background: var(--light);
       color: var(--dark);
+      position: relative;
+      overflow: hidden;
     }
 
     #skills .section-heading { color: var(--dark); }
 
     .skills-layout { max-width: 700px; }
+
+    .skills-card {
+      background: rgba(240,247,244,0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 4px;
+      padding: 36px 40px;
+      max-width: 700px;
+    }
 
     .skills-bio h3 {
       font-size: 1.1rem;
@@ -230,7 +243,7 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 16px;
-      color: var(--dark);
+      color: var(--accent);
     }
 
     .skills-bio p {
@@ -240,39 +253,143 @@
       line-height: 1.75;
     }
 
-    /* ── EXPERIENCE ── */
-    #experience { background: var(--darker); }
+    /* ── TECHNOLOGIES  (section 2 — dark bg, blue accent) ── */
+    #technologies {
+      background: var(--darker);
+      color: var(--light);
+    }
+
+    #technologies .section-heading { color: var(--light); }
+
+    .tech-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-bottom: 36px;
+      border-bottom: 1px solid rgba(56,189,248,0.2);
+    }
+
+    .tech-tab-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #666;
+      padding: 10px 18px;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tech-tab-btn:hover { color: var(--accent2); }
+    .tech-tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+    .tech-panel { display: none; }
+    .tech-panel.active { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .tech-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56,189,248,0.06);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 2px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--light);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .tech-tag:hover {
+      border-color: var(--accent2);
+      box-shadow: 0 2px 8px rgba(56,189,248,0.12);
+    }
+    .tech-tag svg { flex-shrink: 0; }
+
+    /* ── EXPERIENCE  (section 3 — light bg, dark cards, green accent) ── */
+    #experience {
+      background: var(--light);
+      color: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #experience .topo-bg,
+    #skills .topo-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+
+    #experience .section-heading { color: var(--dark); }
 
     .exp-timeline {
       position: relative;
-      padding-left: 32px;
-    }
-
-    .exp-timeline::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 1px;
-      height: 100%;
-      background: var(--border-dark);
     }
 
     .exp-item {
-      position: relative;
-      margin-bottom: 52px;
-      padding-left: 32px;
+      width: 55%;
+      margin-bottom: 48px;
+      padding: 28px 32px;
+      background: var(--dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 2px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
     }
 
     .exp-item:last-child { margin-bottom: 0; }
 
-    .exp-item::before {
-      content: '';
-      position: absolute;
-      left: -4px; top: 6px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid var(--darker);
+    /* odd items left-aligned */
+    .exp-item:nth-child(odd) {
+      margin-left: 0;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    /* even items right-aligned */
+    .exp-item:nth-child(even) {
+      margin-left: auto;
+      margin-right: 0;
+      text-align: right;
+    }
+
+    .exp-item:nth-child(even) .exp-header {
+      flex-direction: row-reverse;
+    }
+
+    .exp-item:nth-child(even) .exp-accomplishments {
+      border-left: none;
+      border-right: 2px solid var(--border-dark);
+      padding-left: 0;
+      padding-right: 14px;
+    }
+
+    .exp-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .exp-logo {
+      width: 40px; height: 32px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .exp-logo svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .exp-dates {
@@ -281,54 +398,41 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     .exp-company {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 2px;
+      color: var(--light);
     }
 
     .exp-role {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #6b9e8a;
       margin-bottom: 12px;
     }
 
     .exp-bullets {
       padding-left: 0;
       list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
     }
 
     .exp-bullets li {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #aaa;
-      padding-left: 14px;
-      position: relative;
-      line-height: 1.6;
-    }
-
-    .exp-bullets li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 0.75rem;
+      line-height: 1.7;
     }
 
     .exp-accomplishments {
       margin-top: 12px;
       padding-left: 14px;
-      border-left: 1px solid var(--border-dark);
+      border-left: 2px solid var(--border-dark);
     }
 
     .exp-accomplishments-label {
@@ -340,8 +444,19 @@
       margin-bottom: 8px;
     }
 
-    /* ── EDUCATION & CERTS ── */
-    #edu { background: var(--dark); }
+    @media (max-width: 768px) {
+      .exp-item { width: 100%; margin-left: 0 !important; margin-right: 0 !important; padding: 20px; text-align: left !important; }
+      .exp-item:nth-child(even) .exp-header { flex-direction: row; }
+      .exp-item:nth-child(even) .exp-accomplishments { border-left: 2px solid var(--border-dark); border-right: none; padding-left: 14px; padding-right: 0; }
+    }
+
+    /* ── EDUCATION & CERTS  (section 4 — dark bg, blue accent) ── */
+    #edu {
+      background: var(--darker);
+      color: var(--light);
+    }
+
+    #edu .section-heading { color: var(--light); }
 
     .edu-grid {
       display: grid;
@@ -354,14 +469,14 @@
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent2);
       margin-bottom: 24px;
     }
 
     .edu-entry {
       margin-bottom: 28px;
       padding-bottom: 28px;
-      border-bottom: 1px solid var(--border-dark);
+      border-bottom: 1px solid rgba(56,189,248,0.12);
     }
     .edu-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
@@ -371,11 +486,12 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 4px;
+      color: var(--light);
     }
 
     .edu-school {
       font-size: 0.82rem;
-      color: var(--muted);
+      color: #6b9e8a;
       letter-spacing: 1px;
     }
 
@@ -385,7 +501,7 @@
       gap: 14px;
       margin-bottom: 20px;
       padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-dark);
+      border-bottom: 1px solid rgba(56,189,248,0.12);
     }
     .cert-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
@@ -407,68 +523,12 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      color: var(--light);
     }
 
-    /* ── TECHNOLOGIES ── */
-    #technologies {
-      background: var(--light);
-      color: var(--dark);
-    }
-
-    #technologies .section-heading { color: var(--dark); }
-
-    .tech-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      margin-bottom: 36px;
-      border-bottom: 1px solid rgba(0,0,0,0.15);
-    }
-
-    .tech-tab-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #999;
-      padding: 10px 18px;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .tech-tab-btn:hover { color: var(--dark); }
-    .tech-tab-btn.active { color: var(--dark); border-bottom-color: var(--dark); }
-
-    .tech-panel { display: none; }
-    .tech-panel.active { display: flex; flex-wrap: wrap; gap: 10px; }
-
-    .tech-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: white;
-      border: 1px solid rgba(0,0,0,0.12);
-      border-radius: 2px;
-      padding: 8px 14px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--dark);
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .tech-tag:hover {
-      border-color: var(--dark);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .tech-tag svg { flex-shrink: 0; }
-
-    /* ── CONTACT ── */
+    /* ── CONTACT  (section 5 — darker bg, green accent) ── */
     #contact {
-      background: var(--darker);
+      background: var(--dark);
       padding-bottom: 0;
     }
 
@@ -562,9 +622,9 @@
     <ul class="nav-links">
       <li><a href="#hero">Home</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#technologies">Technologies</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#edu">Education</a></li>
-      <li><a href="#technologies">Technologies</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -572,8 +632,8 @@
   <!-- ── HERO ── -->
   <section id="hero">
     <div class="hero-inner">
+      <h1 class="hero-name"><span>Armando</span><br>Soriano</h1>
       <div class="hero-label">Software Engineer &amp; Data Engineer</div>
-      <h1 class="hero-name">I'M <span>Armando</span><br>Soriano.</h1>
       <p class="hero-title">8+ Years · Python · AWS · Azure · REST APIs</p>
       <a href="#contact" class="hero-cta">Get In Touch</a>
     </div>
@@ -582,131 +642,32 @@
 
   <!-- ── SKILLS ── -->
   <section id="skills" class="section">
+    <svg class="topo-bg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1400 800" aria-hidden="true">
+      <g fill="none">
+        <path d="M-40,580 Q160,445 370,510 Q580,575 740,465 Q900,350 1110,443 Q1275,520 1440,420" stroke="#34d399" stroke-width="1.8" opacity="0.35"/>
+        <path d="M-40,532 Q160,390 370,462 Q580,535 740,415 Q900,294 1110,396 Q1275,472 1440,374" stroke="#34d399" stroke-width="1.4" opacity="0.28"/>
+        <path d="M-40,484 Q160,338 370,414 Q580,490 740,365 Q900,238 1110,348 Q1275,424 1440,326" stroke="#34d399" stroke-width="1.2" opacity="0.22"/>
+        <path d="M-40,436 Q160,285 370,365 Q580,444 740,314 Q900,182 1110,300 Q1275,376 1440,278" stroke="#34d399" stroke-width="1" opacity="0.18"/>
+        <path d="M-40,388 Q160,230 370,316 Q580,398 740,262 Q900,126 1110,252 Q1275,328 1440,230" stroke="#34d399" stroke-width="0.8" opacity="0.13"/>
+        <path d="M-40,620 Q205,498 410,550 Q615,608 820,518 Q985,442 1195,490 Q1310,518 1440,468" stroke="#34d399" stroke-width="2.2" opacity="0.42"/>
+        <path d="M-40,656 Q245,544 450,592 Q655,640 860,560 Q1045,486 1255,530 Q1360,552 1440,512" stroke="#34d399" stroke-width="1.6" opacity="0.3"/>
+        <path d="M160,660 Q328,592 534,636 Q738,678 944,602 Q1148,530 1356,570" stroke="#34d399" stroke-width="1.2" opacity="0.22"/>
+        <path d="M-40,345 Q205,180 410,268 Q615,344 820,204 Q985,86 1195,196 Q1310,260 1440,172" stroke="#34d399" stroke-width="0.8" opacity="0.12"/>
+        <path d="M326,660 Q452,606 656,640 Q860,674 1064,614 Q1254,556 1440,586" stroke="#34d399" stroke-width="1" opacity="0.18"/>
+      </g>
+    </svg>
     <div class="section-inner">
       <h2 class="section-heading">Professional</h2>
       <div class="skills-layout">
-        <div class="skills-bio">
-          <h3>About Me</h3>
-          <p>Technology professional with 8+ years of experience developing scalable software solutions and data pipelines across cloud and on-premises environments.</p>
-          <p>Strong foundation in software engineering, data engineering, cloud architecture, and system integration — complemented by an MS in Data Science and certifications in AWS and Azure.</p>
-          <p><strong>Software Engineering:</strong> Application Development, System Integration, API Development, CI/CD Pipelines, TDD, Agile</p>
-          <p><strong>Data Engineering:</strong> ETL Development, Data Modeling, Data Warehousing, Pipeline Orchestration, Batch Processing</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── EXPERIENCE ── -->
-  <section id="experience" class="section">
-    <div class="section-inner">
-      <h2 class="section-heading">Experience</h2>
-      <div class="exp-timeline">
-
-        <div class="exp-item">
-          <div class="exp-dates">October 2024 – June 2026</div>
-          <div class="exp-company">Capital One</div>
-          <div class="exp-role">Senior Platform Engineer</div>
-          <ul class="exp-bullets">
-            <li>Consolidated cloud service monitoring through centralized dashboards, providing unified visibility across multiple platforms and infrastructure components.</li>
-            <li>Engineered monitoring scripts and reporting dashboards to track system health, credential rotation compliance, and maintenance effectiveness.</li>
-          </ul>
-          <div class="exp-accomplishments">
-            <div class="exp-accomplishments-label">Key Accomplishments</div>
-            <ul class="exp-bullets">
-              <li>Spearheaded modernization of a critical automation platform by migrating legacy RPA components to Python and replacing UI-driven interactions with REST API integrations.</li>
-              <li>Automated secure secret management by developing Jenkins pipelines integrated with AWS services, reducing manual effort and improving operational reliability.</li>
-              <li>Orchestrated end-to-end decommissioning of a legacy application through enterprise-wide asset discovery, inventorying cloud resources, governance artifacts, and accounts.</li>
-            </ul>
+        <div class="skills-card">
+          <div class="skills-bio">
+            <h3>About Me</h3>
+            <p>Technology professional with 8+ years of experience developing scalable software solutions and data pipelines across cloud and on-premises environments.</p>
+            <p>Strong foundation in software engineering, data engineering, cloud architecture, and system integration — complemented by an MS in Data Science and certifications in AWS and Azure.</p>
+            <p><strong>Software Engineering:</strong> Application Development, System Integration, API Development, CI/CD Pipelines, TDD, Agile</p>
+            <p><strong>Data Engineering:</strong> ETL Development, Data Modeling, Data Warehousing, Pipeline Orchestration, Batch Processing</p>
           </div>
         </div>
-
-        <div class="exp-item">
-          <div class="exp-dates">June 2021 – June 2024</div>
-          <div class="exp-company">Ashling Partners</div>
-          <div class="exp-role">Senior RPA Consultant</div>
-          <ul class="exp-bullets">
-            <li>Architected enterprise automation solutions leveraging UiPath, Python, and SQL to streamline complex business processes.</li>
-            <li>Directed iterative project delivery using Agile methodologies, ensuring alignment between business objectives and automation outcomes.</li>
-            <li>Integrated business intelligence reporting frameworks to provide automation performance insights.</li>
-            <li>Steered end-to-end solution architecture for complex automation initiatives, defining process flows, technical designs, and implementation strategies.</li>
-          </ul>
-          <div class="exp-accomplishments">
-            <div class="exp-accomplishments-label">Key Accomplishments</div>
-            <ul class="exp-bullets">
-              <li>Established automated employee training tracking and notification workflows, improving compliance and training completion rates.</li>
-              <li>Streamlined employee master data management within Oracle ERP through scalable automation.</li>
-              <li>Championed adoption of TDD practices by creating reusable testing frameworks, significantly reducing code review effort and accelerating delivery cycles.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-dates">February 2020 – June 2021</div>
-          <div class="exp-company">AAA</div>
-          <div class="exp-role">RPA Developer</div>
-          <ul class="exp-bullets">
-            <li>Implemented UiPath solutions that automatically routed and allocated recovered payments from inbound emails to appropriate departments within internal ERP systems.</li>
-          </ul>
-          <div class="exp-accomplishments">
-            <div class="exp-accomplishments-label">Key Accomplishments</div>
-            <ul class="exp-bullets">
-              <li>Designed end-to-end invoice processing automations that reduced manual effort, improved processing accuracy, accelerated response times, and lowered operational costs.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-dates">July 2018 – February 2020</div>
-          <div class="exp-company">Sogeti</div>
-          <div class="exp-role">RPA Developer Consultant</div>
-          <ul class="exp-bullets">
-            <li>Secured sensitive employee information by integrating SOAP APIs to transfer records into protected storage environments, eliminating robot access to PII.</li>
-            <li>Developed Access and SQL database solutions to capture, store, and manage transactional data supporting robotic process execution.</li>
-          </ul>
-          <div class="exp-accomplishments">
-            <div class="exp-accomplishments-label">Key Accomplishments</div>
-            <ul class="exp-bullets">
-              <li>Optimized invoice processing accuracy by training and validating ABBYY OCR models for intelligent document extraction.</li>
-              <li>Leveraged Azure Cognitive Services to automate speech transcription and language translation.</li>
-              <li>Centralized transportation logistics, employee, and corporate data into a unified repository to support accident investigations and enterprise reporting.</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ── EDUCATION & CERTS ── -->
-  <section id="edu" class="section">
-    <div class="section-inner">
-      <h2 class="section-heading">Education</h2>
-      <div class="edu-grid">
-
-        <div class="edu-block">
-          <h3>Degrees</h3>
-          <div class="edu-entry">
-            <div class="edu-degree">Master of Science, Data Science</div>
-            <div class="edu-school">University of Illinois at Urbana-Champaign</div>
-          </div>
-          <div class="edu-entry">
-            <div class="edu-degree">Bachelor of Science, Computer Science</div>
-            <div class="edu-school">Tarleton State University</div>
-          </div>
-        </div>
-
-        <div class="edu-block">
-          <h3>Certifications</h3>
-          <div class="cert-entry">
-            <div class="cert-icon aws">AWS</div>
-            <div class="cert-name">Certified Solutions Architect – Associate</div>
-          </div>
-          <div class="cert-entry">
-            <div class="cert-icon azure">AZ</div>
-            <div class="cert-name">Azure Data Scientist Associate</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -781,6 +742,174 @@
         <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#1CE783"/><text x="12" y="16" text-anchor="middle" font-size="9" fill="#1B1F23" font-family="sans-serif" font-weight="bold">NR</text></svg>New Relic</span>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience" class="section">
+    <svg class="topo-bg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1400 800" aria-hidden="true">
+      <g fill="none">
+        <path d="M-40,580 Q160,445 370,510 Q580,575 740,465 Q900,350 1110,443 Q1275,520 1440,420" stroke="#34d399" stroke-width="1.8" opacity="0.35"/>
+        <path d="M-40,532 Q160,390 370,462 Q580,535 740,415 Q900,294 1110,396 Q1275,472 1440,374" stroke="#34d399" stroke-width="1.4" opacity="0.28"/>
+        <path d="M-40,484 Q160,338 370,414 Q580,490 740,365 Q900,238 1110,348 Q1275,424 1440,326" stroke="#34d399" stroke-width="1.2" opacity="0.22"/>
+        <path d="M-40,436 Q160,285 370,365 Q580,444 740,314 Q900,182 1110,300 Q1275,376 1440,278" stroke="#34d399" stroke-width="1" opacity="0.18"/>
+        <path d="M-40,388 Q160,230 370,316 Q580,398 740,262 Q900,126 1110,252 Q1275,328 1440,230" stroke="#34d399" stroke-width="0.8" opacity="0.13"/>
+        <path d="M-40,620 Q205,498 410,550 Q615,608 820,518 Q985,442 1195,490 Q1310,518 1440,468" stroke="#34d399" stroke-width="2.2" opacity="0.42"/>
+        <path d="M-40,656 Q245,544 450,592 Q655,640 860,560 Q1045,486 1255,530 Q1360,552 1440,512" stroke="#34d399" stroke-width="1.6" opacity="0.3"/>
+        <path d="M160,660 Q328,592 534,636 Q738,678 944,602 Q1148,530 1356,570" stroke="#34d399" stroke-width="1.2" opacity="0.22"/>
+        <path d="M-40,345 Q205,180 410,268 Q615,344 820,204 Q985,86 1195,196 Q1310,260 1440,172" stroke="#34d399" stroke-width="0.8" opacity="0.12"/>
+        <path d="M326,660 Q452,606 656,640 Q860,674 1064,614 Q1254,556 1440,586" stroke="#34d399" stroke-width="1" opacity="0.18"/>
+      </g>
+    </svg>
+    <div class="section-inner">
+      <h2 class="section-heading">Experience</h2>
+      <div class="exp-timeline">
+
+        <div class="exp-item">
+          <div class="exp-dates">October 2024 – June 2026</div>
+          <div class="exp-header">
+            <!-- Capital One logo -->
+            <div class="exp-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 418 150">
+  <path fill="#cc2427" d="M283.7,108.5h-.1c-17.8,12.6-38.8,25.8-61.5,39.7l-.9.5a.7.7,0,1,0,.8,1.1l.7-.4c19.3-10,41.4-21.9,63.6-34.2l.4-.2A24.7,24.7,0,0,1,283.7,108.5ZM400.5,13.9c-28-30.9-208.6-3.1-285.3,13.7l-1.8.4a.8.8,0,0,0-.6.8.6.6,0,0,0,.8.5l1.8-.3C179,17.7,311.3,2,339.7,30.2c8.7,8.6,6.7,19.7-3.4,32.8a25.7,25.7,0,0,1,11,15.8C386.6,52.7,413,27.7,400.5,13.9Z"></path>
+  <g fill="#013d5b">
+    <path d="M133 84.3a10.4 10.4 0 0 0-6.1 2 9.4 9.4 0 0 0-3.3 6c-.6 3.1-.3 5.2.9 6.6a7.1 7.1 0 0 0 5.3 2 10.2 10.2 0 0 0 4.4-.9 8.1 8.1 0 0 0 3.3-2.8 12.5 12.5 0 0 0 1.9-4.6c.5-2.8.1-4.8-1.2-6.2a6.7 6.7 0 0 0-5.2-2.1zm-31.1 38.8 8.3-46.8h15l-1.2 6a14.2 14.2 0 0 1 6.3-4.5 27 27 0 0 1 9.7-2c3.9 0 6.3.2 9.2 1.7a12.4 12.4 0 0 1 6 6.6 16.8 16.8 0 0 1 .8 9.5 20.7 20.7 0 0 1-8.4 13.7c-4.6 3.3-8.7 4.2-14.6 4.2a20.4 20.4 0 0 1-5.3-.6 12.1 12.1 0 0 1-3.4-1.3 15.5 15.5 0 0 1-2.8-2.6l-2.8 16.1zm173.1-12.1h-17.4l8.8-48.6 16.9.4zm-86.8-35.1 1.2-7.1 17.8-3.8-1.9 10.9h8.8l-1.7 7.1h-8.5l-5.1 28h-17.3l5.2-28h-6.5l1.3-7h6.7zm-138.6 22.6a62.3 62.3 0 0 1-14.2 1.5c-8.1 0-14.6-4-14.2-11.5.2-4.9 6.1-15.3 20.9-15.3a24.3 24.3 0 0 1 13.3 3.6l2.1-12.1a40.3 40.3 0 0 0-16.8-2.8c-19.5.2-38.2 9-40.5 27s20 22.9 29.9 22.9c5.7 0 11.7-.3 17.2-.8zm189.7-3.5-2.9.8-6.7 1.2a10.8 10.8 0 0 0-4.5 1.4 3 3 0 0 0-1.5 2.2 2.2 2.2 0 0 0 .9 2.4c.9.6 2.3.8 4.3.8a16.1 16.1 0 0 0 4.4-.6 10.2 10.2 0 0 0 3.6-1.9 5.1 5.1 0 0 0 1.5-2.3 22.4 22.4 0 0 0 .9-4zm18.4-11.5c-.1 1.7-.4 3.3-.8 5.8l-3.1 17.5a3.2 3.2 0 0 0 1.7 3.6v.6h-17.9v-4.5a36 36 0 0 1-8.6 3.7 32.2 32.2 0 0 1-8.6 1c-5.7 0-9-.6-11.3-2.6s-3.4-3.4-3.3-6.2a9.5 9.5 0 0 1 2.2-5.2 13.3 13.3 0 0 1 4.7-3.3 25.4 25.4 0 0 1 7.1-2c3.2-.5 7.6-1 13.5-1.5a24 24 0 0 0 5.8-1.3c1.2-.5 1.7-1 1.9-2s-.2-2.8-2.6-3.3c-6.4-1.3-18.4.8-24.6 2.3l3.3-9a161.7 161.7 0 0 1 23.9-2c12.7.1 16.8 3.8 16.7 8.4zm-102.2 27.5 6.2-34.9h17.1l-6.2 34.9zm7.2-42.9c.5-2.9 5-5.2 10.1-5.2s8.7 2.3 8.2 5.2-5 5.2-10.1 5.2-8.7-2.4-8.2-5.2zm-77.2 26.8a13 13 0 0 1-2.9.8l-6.6 1.2a10.8 10.8 0 0 0-4.6 1.4 3.2 3.2 0 0 0-1.5 2.3 2.1 2.1 0 0 0 1 2.3 7.3 7.3 0 0 0 4.2.9 16.2 16.2 0 0 0 4.4-.7 10.2 10.2 0 0 0 3.6-1.9 5.1 5.1 0 0 0 1.5-2.3 14.7 14.7 0 0 0 .9-4zm18.4-11.4c-.1 1.7-.4 3.2-.8 5.8l-3.1 17.4a3.2 3.2 0 0 0 1.7 3.6v.7h-17.9v-4.4a40.2 40.2 0 0 1-8.6 3.6 31.8 31.8 0 0 1-8.5 1.1c-5.8 0-9.1-.6-11.3-2.6s-3.5-3.4-3.4-6.3a9.6 9.6 0 0 1 2.2-5.1 13.5 13.5 0 0 1 4.7-3.4 28.9 28.9 0 0 1 7.2-2c3.1-.5 7.5-1 13.4-1.5a15.7 15.7 0 0 0 5.8-1.3c1.3-.5 1.7-1 1.9-2s-.2-2.8-2.6-3.3c-6.4-1.2-18.4.8-24.6 2.4l3.3-9.1a162.8 162.8 0 0 1 23.9-2c12.7 0 16.8 3.7 16.7 8.4zM344.6 88.2l3.9-.4c1.3 0 2.4.3 2.5 1.5s-1.3 6-1.6 7.3l-2.7 11.7c-1 4.8-2.2 9.8-3.2 13.8h6.8l3.8-18.6c11.8-12.2 16.3-16.2 19-16.2a2 2 0 0 1 2.2 2.2c.1 2.1-1.3 7-1.7 8.4l-4 13.5c-.8 3.1-1.5 5.8-1.4 7.8s1.9 4.3 4.5 4.3c5 0 8.7-5.2 11.8-10.3l-.9-1.7c-1.3 2-4.2 6.5-6.6 6.5-.7 0-1.4-.5-1.4-1.7a20.5 20.5 0 0 1 1-5.5l4.4-15.9c1.1-4.4 1.7-7.2 1.7-8.7s-1.9-4.3-4.5-4.3c-4.5 0-10.5 3.3-23.1 17.8h-.2l1.6-7.1c.9-3.9 1.7-7.9 2.5-10.7a114.5 114.5 0 0 1-14.5 4.1zm66.9.4c-.1-2.8-1.5-4.7-4.4-4.7-7 0-14.4 13.7-15.7 19.2 11.4 0 20.4-6.8 20.1-14.5zm1.5 21.5 1.3.9c-3.4 6.9-10.3 12.5-18.5 12.5-6.7 0-12.1-4.4-12.4-12.7-.6-15 13.5-28.9 24.9-28.9 4.9 0 9.5 2.2 9.7 7.5.4 11.9-16.3 15.5-27.3 15.7a14.3 14.3 0 0 0-.4 4.4c.2 5 3.2 9.1 9.3 9.1s10.7-4.3 13.4-8.5zm-117.9-9.7c.3 10.9 7.2 19.8 16.2 19.8 17.4 0 24.8-21.4 24.3-35.7-.4-10.9-7.4-19.8-16.4-19.8-15 0-24.7 21.3-24.1 35.7zm-9.2-.6c-.7-18.6 13.9-37.6 35-37.6 14.2 0 23.4 9.5 23.9 23.9.7 19.6-12.9 37.6-35 37.6-14.2 0-23.4-9.4-23.9-23.9z"></path>
+  </g>
+</svg>
+            </div>
+            <div class="exp-company">Capital One</div>
+          </div>
+          <div class="exp-role">Senior Platform Engineer</div>
+          <ul class="exp-bullets">
+            <li>Engineered cloud monitoring solutions, automation pipelines, and credential management systems across AWS and multi-platform environments to improve operational visibility and reliability.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Modernized a critical automation platform by migrating legacy RPA components to Python with REST API integrations, while leading enterprise-wide decommissioning of a legacy application through full asset discovery and cloud resource inventory.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dates">June 2021 – June 2024</div>
+          <div class="exp-header">
+            <!-- Ashling Partners logo -->
+            <div class="exp-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 193 40" fill="none">
+                <path d="M18.6652 18.6725H15.0573V9.47814C15.0573 6.19027 12.5404 3.60798 9.33259 3.60798C6.12474 3.60798 3.60792 6.17572 3.60792 9.33265C3.60792 12.4896 6.17566 15.0573 9.33259 15.0573H12.395V18.6652H9.33259C4.18257 18.6652 0 14.4754 0 9.33265C0 4.18991 4.18985 6.10352e-05 9.33259 6.10352e-05C14.4753 6.10352e-05 18.6652 4.25537 18.6652 9.47814V18.6725Z" fill="#00A157"/>
+                <path d="M18.6652 21.3275H15.0573V30.5219C15.0573 33.8098 12.5404 36.3921 9.33259 36.3921C6.12474 36.3921 3.60792 33.8243 3.60792 30.6674C3.60792 27.5104 6.17566 24.9427 9.33259 24.9427H12.395V21.3348H9.33259C4.18257 21.3348 0 25.5246 0 30.6674C0 35.8101 4.18985 40 9.33259 40C14.4753 40 18.6652 35.7447 18.6652 30.5219V21.3275Z" fill="#60D086"/>
+                <path d="M21.3281 18.6725H24.936V9.47807C24.936 6.19021 27.4529 3.60792 30.6607 3.60792C33.8686 3.60792 36.3854 6.17566 36.3854 9.33259C36.3854 12.4895 33.8177 15.0573 30.6607 15.0573H27.5983V18.6652H30.6607C35.8107 18.6652 39.9933 14.4753 39.9933 9.33259C39.9933 4.18257 35.8035 0 30.6607 0C25.5107 0 21.3281 4.25531 21.3281 9.47807V18.6725Z" fill="#60D086"/>
+                <path d="M21.3281 21.3275H24.936V30.5219C24.936 33.8098 27.4529 36.3921 30.6607 36.3921C33.8686 36.3921 36.3854 33.8243 36.3854 30.6674C36.3854 27.5104 33.8177 24.9427 30.6607 24.9427H27.5983V21.3348H30.6607C35.8107 21.3348 39.9933 25.5246 39.9933 30.6674C39.9933 35.8174 35.8035 40 30.6607 40C25.5107 40 21.3281 35.7447 21.3281 30.5219V21.3275Z" fill="#00A157"/>
+                <path d="M192.659 29.4839C191.579 30.0036 190.39 30.4033 189.091 30.6832C187.811 30.983 186.332 31.1329 184.653 31.1329C182.934 31.1329 181.365 30.8631 179.946 30.3234C178.527 29.7637 177.307 28.9942 176.288 28.0147C175.269 27.0153 174.469 25.836 173.889 24.4768C173.33 23.0976 173.05 21.5785 173.05 19.9194C173.05 18.2204 173.34 16.6913 173.919 15.3321C174.519 13.9529 175.328 12.7836 176.348 11.8241C177.387 10.8647 178.607 10.1251 180.006 9.60541C181.405 9.08572 182.924 8.82587 184.563 8.82587C186.262 8.82587 187.811 9.07572 189.211 9.57543C190.63 10.0552 191.769 10.6948 192.629 11.4943L190.02 14.3127C189.48 13.713 188.721 13.2033 187.741 12.7836C186.782 12.3638 185.733 12.1539 184.593 12.1539C183.474 12.1539 182.454 12.3538 181.535 12.7536C180.635 13.1534 179.866 13.703 179.226 14.4026C178.587 15.1022 178.087 15.9217 177.727 16.8612C177.387 17.8007 177.217 18.8201 177.217 19.9194C177.217 21.0588 177.387 22.1082 177.727 23.0676C178.087 24.0071 178.587 24.8266 179.226 25.5262C179.886 26.2258 180.675 26.7755 181.595 27.1752C182.534 27.555 183.594 27.7449 184.773 27.7449C186.392 27.7449 187.801 27.495 189.001 26.9953V21.5985H184.533V18.4803H192.659V29.4839Z" fill="white"/>
+                <path d="M148.277 9.36554H153.284L163.149 25.2563H163.209V9.36554H166.987V30.5932H162.189L152.115 14.1927H152.055V30.5932H148.277V9.36554Z" fill="white"/>
+                <path d="M137.417 9.36554H141.195V30.5932H137.417V9.36554Z" fill="white"/>
+                <path d="M119.703 9.36554H123.481V27.2352H132.506V30.5932H119.703V9.36554Z" fill="white"/>
+                <path d="M95.1406 9.36554H98.9185V17.9406H108.843V9.36554H112.621V30.5932H108.843V21.1787H98.9185V30.5932H95.1406V9.36554Z" fill="white"/>
+                <path d="M86.3484 13.803C85.9486 13.2833 85.379 12.8535 84.6394 12.5137C83.9198 12.1539 83.1902 11.974 82.4506 11.974C82.0109 11.974 81.5712 12.034 81.1314 12.1539C80.6917 12.2539 80.2919 12.4238 79.9321 12.6636C79.5723 12.8835 79.2725 13.1833 79.0326 13.5631C78.8127 13.9229 78.7028 14.3627 78.7028 14.8824C78.7028 15.3621 78.8027 15.7718 79.0026 16.1116C79.2025 16.4514 79.4724 16.7413 79.8122 16.9811C80.172 17.221 80.6017 17.4309 81.1014 17.6108C81.6011 17.7907 82.1508 17.9706 82.7505 18.1505C83.4301 18.3703 84.1297 18.6202 84.8493 18.9C85.5888 19.1799 86.2585 19.5496 86.8581 20.0094C87.4778 20.4691 87.9775 21.0488 88.3572 21.7484C88.757 22.448 88.9569 23.3175 88.9569 24.3569C88.9569 25.4962 88.747 26.4956 88.3273 27.3551C87.9075 28.1946 87.3478 28.8942 86.6482 29.4539C85.9486 30.0136 85.1291 30.4333 84.1896 30.7132C83.2502 30.993 82.2608 31.1329 81.2214 31.1329C79.8421 31.1329 78.4929 30.8831 77.1737 30.3834C75.8544 29.8637 74.7751 29.1041 73.9355 28.1047L76.634 25.5861C77.1537 26.3057 77.8433 26.8754 78.7028 27.2951C79.5823 27.7149 80.4418 27.9248 81.2813 27.9248C81.7211 27.9248 82.1708 27.8748 82.6305 27.7749C83.0903 27.6549 83.5 27.465 83.8598 27.2052C84.2396 26.9454 84.5394 26.6255 84.7593 26.2458C84.9992 25.846 85.1191 25.3563 85.1191 24.7766C85.1191 24.2169 84.9892 23.7572 84.7293 23.3974C84.4695 23.0176 84.1197 22.6978 83.6799 22.438C83.2402 22.1581 82.7205 21.9183 82.1208 21.7184C81.5212 21.5185 80.8915 21.3086 80.2319 21.0888C79.5923 20.8889 78.9527 20.649 78.313 20.3692C77.6734 20.0893 77.0937 19.7195 76.574 19.2598C76.0743 18.8001 75.6646 18.2404 75.3447 17.5808C75.0249 16.9012 74.865 16.0617 74.865 15.0622C74.865 13.9829 75.0849 13.0534 75.5246 12.2739C75.9844 11.4943 76.574 10.8547 77.2936 10.355C78.0332 9.83528 78.8627 9.4555 79.7822 9.21564C80.7216 8.95579 81.6711 8.82587 82.6305 8.82587C83.7099 8.82587 84.7993 9.01576 85.8987 9.39554C87.018 9.77532 87.9875 10.345 88.807 11.1045L86.3484 13.803Z" fill="white"/>
+                <path d="M58.6136 9.36554H61.8817L71.0264 30.5932H66.7089L64.7301 25.736H55.5254L53.6065 30.5932H49.3789L58.6136 9.36554ZM63.4108 22.4979L60.1427 13.8629L56.8146 22.4979H63.4108Z" fill="white"/>
+              </svg>
+            </div>
+            <div class="exp-company">Ashling Partners</div>
+          </div>
+          <div class="exp-role">Senior RPA Consultant</div>
+          <ul class="exp-bullets">
+            <li>Architected and delivered enterprise automation solutions using UiPath, Python, and SQL across multiple client engagements, leading Agile teams and integrating BI reporting to align automation outcomes with business objectives.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Drove measurable improvements in compliance, ERP data quality, and delivery speed by automating employee training workflows, Oracle master data management, and championing TDD practices with reusable testing frameworks.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dates">February 2020 – June 2021</div>
+          <div class="exp-header">
+            <!-- AAA logo -->
+            <div class="exp-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="-0.378 -0.624 501 317">
+                <polygon opacity="0" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" points="0,0 500,0 500,315.508 0,315.508 0,0"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#0A357E" d="M472.147,34.647c-12.912-21.999-80.82-7.652-165.468,31.084c4.306,3.349,8.609,7.174,11.956,11c65.041-27.737,115.253-36.344,125.776-18.173c11.956,20.565-35.392,71.735-111.431,122.428l0.959,0.955C426.716,121.685,486.495,59.516,472.147,34.647L472.147,34.647L472.147,34.647z"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#0A357E" d="M71.392,273.764c-7.174-12.914,8.13-37.303,38.736-66.474l0,0c-2.391-0.48-4.781-1.437-7.173-2.393c-0.478,0-0.478-0.48-0.478-0.48c-2.39-0.955-4.782-1.911-7.174-2.866C58.48,235.5,39.829,264.196,48.438,279.503c10.521,17.693,55.951,11.954,116.686-10.522l-0.477-0.956C115.866,284.762,80,288.109,71.392,273.764L71.392,273.764L71.392,273.764z"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#FD000D" d="M33.134,125.033c0-52.127,68.865-94.69,153.511-94.69c85.124,0,153.99,42.563,153.99,94.69c0,52.605-68.866,95.167-153.99,95.167C101.999,220.199,33.134,177.638,33.134,125.033L33.134,125.033L33.134,125.033L33.134,125.033z M120.171,51.386l29.174,98.993l0,0L179.95,38.472C158.429,39.431,137.866,43.732,120.171,51.386L120.171,51.386L120.171,51.386L120.171,51.386z M178.515,92.514l-15.782,57.865h32.042L178.515,92.514L178.515,92.514L178.515,92.514z M223.947,150.379l27.737-99.95c-18.172-7.174-38.736-11.479-60.257-11.957L223.947,150.379L223.947,150.379L223.947,150.379L223.947,150.379z M119.694,150.379L103.91,92.514l-15.779,57.865H119.694L119.694,150.379L119.694,150.379z M301.898,161.856c7.651-11,11.957-23.433,11.957-36.824c0-25.346-15.782-47.823-41.608-64.084L301.898,161.856L301.898,161.856L301.898,161.856z M269.38,150.379l-16.26-57.865l-15.781,57.865H269.38L269.38,150.379L269.38,150.379z M272.728,161.856H233.99l-3.346,12.434l9.085,29.646c14.825-4.303,28.214-10.998,39.215-19.123L272.728,161.856L272.728,161.856L272.728,161.856z M134.519,203.937l-11.479-42.08H84.783l-3.349,11.953c13.391,13.39,31.563,23.913,53.084,30.607V203.937L134.519,203.937L134.519,203.937z M198.124,161.856h-38.738l-12.434,45.908c12.434,2.872,25.826,4.304,39.693,4.304c8.609,0,16.738-0.476,24.868-1.912L198.124,161.856L198.124,161.856L198.124,161.856z M98.651,62.863c-23.911,15.78-38.736,37.781-38.736,62.17c0,13.391,4.303,25.346,11.477,36.345L98.651,62.863L98.651,62.863z"/>
+              </svg>
+            </div>
+            <div class="exp-company">AAA</div>
+          </div>
+          <div class="exp-role">RPA Developer</div>
+          <ul class="exp-bullets">
+            <li>Built UiPath automations to route and allocate recovered payments from inbound emails to the appropriate ERP departments, eliminating manual triage and reducing processing delays.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Delivered end-to-end invoice processing automations that cut manual effort, improved accuracy, accelerated response times, and reduced operational costs.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dates">July 2018 – February 2020</div>
+          <div class="exp-header">
+            <!-- Sogeti logo -->
+            <div class="exp-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 71 37">
+                <circle fill="#f53b53" cx="68.48" cy="2.32" r="2.15"/>
+                <path fill="#0058ab" d="M57.91,2.52l1.98-.33v4.57s5.37,0,5.37,0v1.37c0,.86-.7,1.55-1.55,1.55h-3.82s0,6.15,0,6.15c0,1.21.19,2.08.58,2.6s1.04.78,1.96.78c.64,0,1.2-.07,1.69-.2.49-.13.88-.26,1.17-.38l.36,1.72c.13.64-.14,1.19-.93,1.46-.42.14-1.38.4-2.75.4-1.08,0-1.98-.14-2.7-.43s-1.3-.71-1.72-1.26c-.42-.55-.72-1.21-.89-1.99s-.26-1.67-.26-2.67V4.3c0-.88.64-1.64,1.52-1.78ZM70.25,9.07c0-1.27-1.03-2.31-2.31-2.31h-1.19s0,12.59,0,12.59c0,1.39,1.13,2.52,2.52,2.52h.98s0-12.8,0-12.8ZM41.36,14.4c0-1.32.2-2.49.59-3.48.39-1,.92-1.83,1.57-2.49.65-.66,1.4-1.16,2.25-1.5.84-.34,1.71-.5,2.59-.5,2.07,0,3.69.64,4.85,1.93,1.16,1.29,1.74,3.21,1.74,5.76,0,.19,0,.41-.02.65,0,.24-.02.46-.04.65h-9.93c.1,1.21.52,2.14,1.28,2.81.76.66,1.86.99,3.3.99.84,0,1.62-.08,2.32-.23.18-.04.34-.08.5-.12.63-.16,1.26.27,1.37.91l.25,1.56c-.19.1-.46.2-.79.3-.34.11-.72.2-1.15.29-.43.09-.9.16-1.4.22s-1.01.09-1.53.09c-1.32,0-2.48-.2-3.45-.59s-1.78-.94-2.42-1.64c-.63-.7-1.1-1.53-1.41-2.48-.31-.95-.46-1.99-.46-3.12ZM51.47,12.85c0-.48-.07-.94-.2-1.37s-.33-.81-.59-1.12c-.26-.32-.58-.57-.95-.75-.37-.18-.82-.27-1.34-.27s-1.01.1-1.41.3c-.4.2-.74.46-1.02.79s-.49.7-.65,1.12c-.15.42-.26.85-.32,1.3h6.48ZM26.4,14.29c0,1.2-.17,2.28-.5,3.27-.34.98-.81,1.82-1.43,2.51-.61.69-1.36,1.23-2.22,1.62-.87.38-1.82.58-2.86.58s-1.99-.19-2.85-.58c-.86-.39-1.59-.93-2.21-1.62-.61-.69-1.09-1.53-1.44-2.51-.34-.98-.52-2.07-.51-3.27s.17-2.28.52-3.25c.34-.97.83-1.81,1.45-2.5.62-.69,1.36-1.23,2.22-1.6.86-.37,1.8-.56,2.82-.56s1.97.19,2.83.56c.87.38,1.61.91,2.22,1.6.61.69,1.09,1.53,1.44,2.5.34.97.52,2.06.52,3.25ZM22.94,14.29c0-1.5-.31-2.69-.93-3.57-.62-.88-1.49-1.31-2.61-1.32s-1.99.44-2.61,1.31c-.62.88-.94,2.07-.94,3.57,0,1.52.31,2.73.94,3.61.62.89,1.49,1.33,2.61,1.33s1.99-.44,2.61-1.33c.62-.89.94-2.09.94-3.61ZM11.36,16.1c-.17-.48-.45-.91-.82-1.29-.37-.38-.85-.71-1.43-1.01-.58-.3-1.28-.6-2.11-.91-.5-.17-.92-.34-1.27-.51-.35-.16-.63-.33-.84-.49-.21-.16-.36-.34-.45-.53-.09-.19-.13-.41-.13-.66,0-.5.22-.87.67-1.11.44-.24,1.02-.36,1.73-.36.57,0,1.1.04,1.57.12,0,0,.29.05.29.05,1.01.12,1.97-.53,2.18-1.54l.15-.76c-.69-.23-1.36-.38-1.82-.47-.61-.12-1.52-.25-2.54-.25-1.75,0-3.14.4-4.16,1.2-1.02.8-1.53,1.89-1.53,3.28,0,.71.11,1.31.33,1.81.22.49.52.91.91,1.26.39.35.84.65,1.37.91.53.26,1.11.51,1.75.74,1.04.39,1.79.74,2.24,1.07.45.33.68.74.68,1.24,0,.54-.21.92-.64,1.14s-1.1.33-2.02.33-1.71-.11-2.17-.22c-.39-.09-.61-.17-.96-.17-.9,0-1.73.56-1.98,1.47l-.22.78c.41.19,1.4.52,2.07.69.73.19,1.62.34,3.23.34,1.98,0,3.51-.37,4.58-1.11,1.07-.74,1.6-1.83,1.6-3.28,0-.67-.09-1.25-.26-1.73ZM8.5,29.28c.45,0,.79.08,1.02.24.24.16.36.42.36.76,0,.18-.03.33-.09.46-.06.13-.16.23-.28.31-.12.08-.27.14-.44.18-.17.04-.37.06-.6.06h-.28v1.08h-.56v-3.02c.13-.03.27-.05.43-.06.16-.01.3-.02.44-.02ZM8.53,29.76c-.14,0-.26,0-.35.01v1.04h.27c.27,0,.47-.04.62-.11.14-.08.22-.22.22-.43,0-.1-.02-.18-.06-.25-.04-.07-.09-.12-.16-.16-.07-.04-.15-.07-.24-.08s-.19-.02-.3-.02ZM10.89,30c.18,0,.33.02.45.07.12.04.22.11.29.19.07.08.12.18.15.29.03.11.05.24.05.37v1.4c-.08.02-.21.04-.37.06-.17.02-.35.04-.57.04-.14,0-.27-.01-.38-.04-.12-.03-.21-.07-.29-.13s-.14-.14-.19-.23c-.05-.09-.07-.21-.07-.35s.03-.25.08-.34c.05-.09.12-.17.21-.22.09-.06.19-.1.31-.12.12-.03.24-.04.37-.04.06,0,.12,0,.19.01.06,0,.13.02.21.04v-.09c0-.06,0-.12-.02-.18-.02-.06-.04-.11-.08-.15s-.08-.08-.15-.1c-.06-.02-.14-.04-.23-.04-.12,0-.24,0-.34.03-.1.02-.19.04-.25.06l-.07-.43c.07-.02.17-.05.3-.07s.27-.04.42-.04ZM10.94,32c.17,0,.29,0,.38-.03v-.59s-.07-.02-.13-.03c-.06,0-.12-.01-.19-.01-.06,0-.12,0-.18.01-.06,0-.12.03-.16.05-.05.02-.09.06-.12.1s-.04.1-.04.16c0,.13.04.21.12.26.08.05.19.07.32.07ZM13.49,30.54s-.11-.03-.18-.05c-.08-.02-.17-.02-.27-.02-.06,0-.12,0-.19.02-.07.01-.11.02-.14.03v1.85h-.54v-2.2c.1-.04.23-.07.39-.11.15-.03.33-.05.52-.05.04,0,.08,0,.12,0,.05,0,.09.01.14.02.05,0,.09.02.14.03.04.01.08.02.11.03l-.09.45ZM13.81,29.45l.54-.09v.7h.82v.45h-.82v.94c0,.19.03.32.09.4s.16.12.3.12c.1,0,.18-.01.26-.03.07-.02.13-.04.18-.06l.09.42c-.06.03-.14.05-.24.08s-.22.04-.35.04c-.17,0-.3-.02-.41-.07s-.2-.11-.26-.19c-.06-.08-.11-.19-.14-.31-.03-.12-.04-.26-.04-.41v-2ZM18.63,31.21c0,.18-.03.35-.08.5-.05.15-.13.28-.23.39-.1.11-.21.19-.35.25s-.29.09-.45.09-.32-.03-.45-.09-.25-.14-.35-.25c-.1-.11-.17-.23-.23-.39-.05-.15-.08-.32-.08-.5s.03-.35.08-.5c.06-.15.13-.28.23-.38.1-.11.22-.19.35-.25.14-.06.28-.09.45-.09s.31.03.45.09c.14.06.25.14.35.25.1.11.17.23.23.38.06.15.08.32.08.5ZM18.08,31.21c0-.23-.05-.41-.15-.55-.1-.13-.24-.2-.41-.2s-.32.07-.41.2c-.1.13-.15.32-.15.55s.05.42.15.55c.1.14.24.2.41.2s.32-.07.41-.2c.1-.14.15-.32.15-.55ZM19.85,28.94c.12,0,.23.01.33.03.09.02.16.04.21.06l-.1.44s-.11-.04-.18-.06-.14-.02-.21-.02c-.08,0-.16.01-.22.04s-.11.06-.14.1c-.04.04-.06.1-.07.16-.01.06-.02.13-.02.21v.15h.84v.45h-.84v1.87h-.54v-2.48c0-.3.08-.53.23-.7.16-.17.39-.25.71-.25ZM37.7,6.69c-.98-.17-2.02-.26-3.11-.26s-2.14.18-3.02.55c-.89.37-1.64.88-2.26,1.53-.62.66-1.09,1.45-1.42,2.37-.32.93-.49,1.94-.49,3.04,0,1.18.15,2.21.46,3.11.31.9.73,1.64,1.28,2.24.55.6,1.2,1.05,1.97,1.36.77.31,1.61.46,2.54.46.7,0,1.33-.09,1.87-.26.47-.15.86-.3,1.18-.45,0,1.47-.62,2.64-2.57,3.13-.8.2-1.87.14-3.3-.26-.39.73-.62,1.99-.01,2.72.53.63,1.85.76,2.68.76,1.86,0,3.88-.8,4.84-1.67,1.24-1.13,1.86-2.92,1.86-5.36V7.23c-.68-.19-1.51-.38-2.49-.55ZM36.7,17.41c-.29.21-.66.4-1.12.55-.46.15-.95.23-1.48.23-.96,0-1.74-.34-2.34-1.03-.61-.68-.91-1.77-.91-3.25,0-1.37.32-2.47.95-3.31.63-.84,1.54-1.26,2.74-1.26.52,0,.96.02,1.3.07.34.05.63.1.87.16v7.83ZM70.41,29.35c-.23-.76-.69-1.43-1.31-1.99-.66-.61-1.45-1.07-2.28-1.41-.07-.03-.13-.06-.2-.08h0s0,0,0,0c-1.02,1.22-4.55,2.13-4.55,4.69,0,1,.63,1.94,1.56,2.31.58.2,1.2.16,1.75-.09s.94-.67,1.27-1.15c.35-.51.61-1.06.94-1.58.31-.48.7-.96,1.28-1.09.53-.12,1.15.01,1.53.4ZM70.43,29.87c-.23-.47-.73-.67-1.23-.64s-.84.33-1.11.71c-.31.43-.52.92-.77,1.39s-.5.89-.85,1.26c-.39.42-.87.73-1.41.89.25.18.6.22.9.23.34.01.68-.02,1.02-.08.61-.11,1.27-.32,1.72-.77-.7,0-1.27-.46-1.32-1.18.45.55,1.14.76,1.82.56.6-.17,1.08-.65,1.28-1.24.12-.38.14-.78-.04-1.15ZM60.52,29.5c0-.56-.03-.94-.4-.94-.17,0-.25.03-.4.08.13,1.91-.3,3.59-.83,3.59-.69,0-.35-4.09-1.81-4.09-1.35,0-1.54,3.26-1.69,3.26-.1,0-.12-.86-.12-1.51.06-.31.09-.59.09-.81,0-.3-.12-.83-.81-.57.02,2.33-.44,3.75-.97,3.75-.77,0-.78-2.12-.78-2.7s.04-1.33-.81-1.06c-.13,2.04-.66,3.57-1,3.57-.5,0-.4-3.52-1.49-3.52-.97,0-1.28,3.33-1.48,3.33-.36,0,.11-3.75-1.29-3.75-.74,0-1.03,1.25-1.32,2.65-.06.27-.12.28-.12-.03,0-.25,0-.53,0-.79.36-1.41-.08-1.93-.73-1.55.21,2.6-.98,3.87-1.9,3.87-.33,0-.59-.14-.79-.36,1.1-.67,1.59-1.45,1.59-2.2,0-.82-.47-1.29-1.25-1.29-1.09,0-1.7,1.12-1.7,2.07,0,.51.1.95.25,1.31-.37.18-.73.33-1.06.48-.03-.98-.14-2.01-.22-2.96-.58-.16-.75.12-.79.64-.1,1.18-.54,1.91-.92,1.91-.29,0-.47-.35-.49-.73-.11-1.89,1.42-2.41,2.23-2.14.17-.42-.02-.72-.74-.72-.88,0-1.53.53-2.01,1.22-.32.46-.69.78-1.18,1.17.01-.11.02-.23.02-.34,0-1.33-.72-1.92-1.41-1.92-.57,0-.93.34-1.14.87-.05-.53-.16-.75-.46-.75-.13,0-.31.04-.51.13.09.29.12.94.12,1.37,0,1.6-.46,2.32-.9,2.32-.5,0-.58-1.9-.63-2.64-.07-.02-.14-.05-.25-.05-.46,0-.52.61-.63,1.18-.12.62-.48,1.41-1.02,1.41-.32,0-.52-.31-.55-.87-.05-1.13.89-2.47,2.36-2.06.19-.45-.11-.79-.72-.79-1.08,0-1.97.81-2.35,1.76-.39.87-1.08,2.16-2.49,2.16-.99,0-1.75-.86-1.75-2.68,0-1.56.99-3.05,2.04-3.05.74,0,.91.72.84,1.4.38.31,1.01.02,1.01-.74,0-.53-.43-1.42-1.81-1.42-1.71,0-3.22,1.7-3.22,3.94s1.1,3.45,2.66,3.45c.98,0,1.91-.56,2.55-1.6.16.91.78,1.29,1.24,1.29.75,0,1.24-.48,1.5-1.14.17.66.52,1.14,1.1,1.14.41,0,.73-.21.97-.54-.1,2.28-.22,3.74,1.13,3.45-.21-.65-.28-1.83-.28-2.89,0-2.91.48-3.86,1.08-3.86.44,0,.58.55.58,1.15,0,.32-.03.68-.11,1.01-.74.46-1.33.83-1.33,1.3,0,.37.27.4.51.4.57,0,1.25-.56,1.63-1.61.33-.2.66-.43.98-.74-.01.11-.02.21-.02.32,0,1.04.46,1.67,1.18,1.67.57,0,1-.4,1.3-1.01.02.35.03.67.04.97-1.16.53-2.44,1.08-2.44,2.59,0,.78.56,1.37,1.3,1.37,1.61,0,1.98-1.7,1.99-3.68.52-.23.92-.4,1.37-.63.39.48.91.72,1.39.72.91,0,1.59-.48,2.14-1.46.1.74.29,1.46.69,1.46.72,0,.87-3.77,1.4-3.77.41,0,.07,4.08,1.16,4.08.93,0,1.1-3.59,1.55-3.59.32,0,.35,3.28,1.36,3.28.5,0,1.04-.6,1.31-1.85.13.83.55,1.85,1.37,1.85.48,0,.89-.48,1.21-1.13.09.66.28,1.13.64,1.13.94,0,.91-3.76,1.66-3.76.58,0,.4,3.76,1.79,3.76.66,0,.97-.56,1.16-1.27.26,1.04.67,1.27,1.01,1.27.21,0,.38-.08.59-.33-1.07-.47-.98-2.16-.98-3.26ZM37.79,35.96c-.33,0-.51-.32-.51-.67,0-.96.71-1.48,1.58-1.92-.04,2.11-.53,2.59-1.07,2.59ZM42.13,29.12c.32,0,.51.3.48.73-.04.5-.4,1.08-1.04,1.53-.33-.95-.09-2.26.56-2.26ZM51.85,27.14c0-.32.25-.58.56-.59.31-.01.52.24.52.55,0,.32-.22.58-.53.59-.31.01-.56-.24-.56-.55ZM59.6,27.33c0-.3.23-.55.51-.56.28-.01.51.23.51.53,0,.3-.23.55-.51.56-.28.01-.51-.23-.51-.53Z"/>
+              </svg>
+            </div>
+            <div class="exp-company">Sogeti</div>
+          </div>
+          <div class="exp-role">RPA Developer Consultant</div>
+          <ul class="exp-bullets">
+            <li>Developed RPA solutions integrating SOAP APIs, Access, and SQL databases to secure PII, automate document extraction with ABBYY OCR, and leverage Azure Cognitive Services for speech transcription and language translation.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Centralized transportation logistics, employee, and corporate data into a unified repository, enabling accident investigations and enterprise reporting across the organization.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION & CERTS ── -->
+  <section id="edu" class="section">
+    <div class="section-inner">
+      <h2 class="section-heading">Education</h2>
+      <div class="edu-grid">
+
+        <div class="edu-block">
+          <h3>Degrees</h3>
+          <div class="edu-entry">
+            <div class="edu-degree">Master of Science, Data Science</div>
+            <div class="edu-school">University of Illinois at Urbana-Champaign</div>
+            <div class="edu-school"> In Progress</div>
+          </div>
+          <div class="edu-entry">
+            <div class="edu-degree">Bachelor of Science, Computer Science</div>
+            <div class="edu-school">Tarleton State University</div>
+          </div>
+        </div>
+
+        <div class="edu-block">
+          <h3>Certifications</h3>
+          <div class="cert-entry">
+            <div class="cert-icon aws">AWS</div>
+            <div class="cert-name">Certified Solutions Architect – Associate</div>
+          </div>
+          <div class="cert-entry">
+            <div class="cert-icon azure">AZ</div>
+            <div class="cert-name">Azure Data Scientist Associate</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
