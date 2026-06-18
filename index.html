@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Armando Soriano</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark: #0f1f1a;
+      --darker: #091410;
+      --light: #f0f7f4;
+      --accent: #34d399;
+      --accent2: #38bdf8;
+      --muted: #6b9e8a;
+      --text-light: #d1fae5;
+      --border-dark: rgba(52,211,153,0.12);
+      --border-light: rgba(0,0,0,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      line-height: 1.7;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(9, 20, 16, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-dark);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── SECTIONS (general) ── */
+    .section {
+      padding: 100px 0;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-heading {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 48px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--darker);
+      position: relative;
+      overflow: hidden;
+      opacity: 1;
+      transform: none;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(52,211,153,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      line-height: 1.0;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+
+    .hero-name span { color: var(--accent); }
+
+    .hero-title {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 12px 32px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-cta:hover {
+      background: var(--accent);
+      color: var(--darker);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: var(--muted);
+      animation: scrollLine 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%   { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50%  { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── SKILLS ── */
+    #skills {
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    #skills .section-heading { color: var(--dark); }
+
+    .skills-layout { max-width: 700px; }
+
+    .skills-bio h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: var(--dark);
+    }
+
+    .skills-bio p {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 12px;
+      line-height: 1.75;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--darker); }
+
+    .exp-timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .exp-timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px;
+      height: 100%;
+      background: var(--border-dark);
+    }
+
+    .exp-item {
+      position: relative;
+      margin-bottom: 52px;
+      padding-left: 32px;
+    }
+
+    .exp-item:last-child { margin-bottom: 0; }
+
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: -4px; top: 6px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--darker);
+    }
+
+    .exp-dates {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .exp-company {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .exp-role {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .exp-bullets {
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: #aaa;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    .exp-accomplishments {
+      margin-top: 12px;
+      padding-left: 14px;
+      border-left: 1px solid var(--border-dark);
+    }
+
+    .exp-accomplishments-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    /* ── EDUCATION & CERTS ── */
+    #edu { background: var(--dark); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+
+    .edu-block h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .edu-entry {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .edu-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .edu-degree {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .edu-school {
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .cert-entry {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .cert-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .cert-icon {
+      width: 36px; height: 36px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .cert-icon.aws   { background: #E25444; color: white; }
+    .cert-icon.azure { background: #0078D4; color: white; }
+
+    .cert-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── TECHNOLOGIES ── */
+    #technologies {
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    #technologies .section-heading { color: var(--dark); }
+
+    .tech-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-bottom: 36px;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .tech-tab-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #999;
+      padding: 10px 18px;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tech-tab-btn:hover { color: var(--dark); }
+    .tech-tab-btn.active { color: var(--dark); border-bottom-color: var(--dark); }
+
+    .tech-panel { display: none; }
+    .tech-panel.active { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .tech-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 2px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--dark);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .tech-tag:hover {
+      border-color: var(--dark);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .tech-tag svg { flex-shrink: 0; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--darker);
+      padding-bottom: 0;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      padding-bottom: 80px;
+    }
+
+    .contact-info h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 0.95rem;
+      color: #aaa;
+      margin-bottom: 24px;
+      line-height: 1.75;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .contact-detail a {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.2s;
+    }
+    .contact-detail a:hover { color: var(--accent); }
+
+    .contact-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .contact-links a {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-links a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── FOOTER BAR ── */
+    .footer-bar {
+      border-top: 1px solid var(--border-dark);
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+      .hero-inner, .section-inner { padding: 0 24px; }
+      .edu-grid, .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+      .hero-name { font-size: 3rem; letter-spacing: -1px; }
+      .section-heading { font-size: 1.8rem; }
+      .footer-bar { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <div class="nav-logo">A</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#edu">Education</a></li>
+      <li><a href="#technologies">Technologies</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-label">Software Engineer &amp; Data Engineer</div>
+      <h1 class="hero-name">I'M <span>Armando</span><br>Soriano.</h1>
+      <p class="hero-title">8+ Years · Python · AWS · Azure · REST APIs</p>
+      <a href="#contact" class="hero-cta">Get In Touch</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills" class="section">
+    <div class="section-inner">
+      <h2 class="section-heading">Professional</h2>
+      <div class="skills-layout">
+        <div class="skills-bio">
+          <h3>About Me</h3>
+          <p>Technology professional with 8+ years of experience developing scalable software solutions and data pipelines across cloud and on-premises environments.</p>
+          <p>Strong foundation in software engineering, data engineering, cloud architecture, and system integration — complemented by an MS in Data Science and certifications in AWS and Azure.</p>
+          <p><strong>Software Engineering:</strong> Application Development, System Integration, API Development, CI/CD Pipelines, TDD, Agile</p>
+          <p><strong>Data Engineering:</strong> ETL Development, Data Modeling, Data Warehousing, Pipeline Orchestration, Batch Processing</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience" class="section">
+    <div class="section-inner">
+      <h2 class="section-heading">Experience</h2>
+      <div class="exp-timeline">
+
+        <div class="exp-item">
+          <div class="exp-dates">October 2024 – June 2026</div>
+          <div class="exp-company">Capital One</div>
+          <div class="exp-role">Senior Platform Engineer</div>
+          <ul class="exp-bullets">
+            <li>Consolidated cloud service monitoring through centralized dashboards, providing unified visibility across multiple platforms and infrastructure components.</li>
+            <li>Engineered monitoring scripts and reporting dashboards to track system health, credential rotation compliance, and maintenance effectiveness.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Spearheaded modernization of a critical automation platform by migrating legacy RPA components to Python and replacing UI-driven interactions with REST API integrations.</li>
+              <li>Automated secure secret management by developing Jenkins pipelines integrated with AWS services, reducing manual effort and improving operational reliability.</li>
+              <li>Orchestrated end-to-end decommissioning of a legacy application through enterprise-wide asset discovery, inventorying cloud resources, governance artifacts, and accounts.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dates">June 2021 – June 2024</div>
+          <div class="exp-company">Ashling Partners</div>
+          <div class="exp-role">Senior RPA Consultant</div>
+          <ul class="exp-bullets">
+            <li>Architected enterprise automation solutions leveraging UiPath, Python, and SQL to streamline complex business processes.</li>
+            <li>Directed iterative project delivery using Agile methodologies, ensuring alignment between business objectives and automation outcomes.</li>
+            <li>Integrated business intelligence reporting frameworks to provide automation performance insights.</li>
+            <li>Steered end-to-end solution architecture for complex automation initiatives, defining process flows, technical designs, and implementation strategies.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Established automated employee training tracking and notification workflows, improving compliance and training completion rates.</li>
+              <li>Streamlined employee master data management within Oracle ERP through scalable automation.</li>
+              <li>Championed adoption of TDD practices by creating reusable testing frameworks, significantly reducing code review effort and accelerating delivery cycles.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dates">February 2020 – June 2021</div>
+          <div class="exp-company">AAA</div>
+          <div class="exp-role">RPA Developer</div>
+          <ul class="exp-bullets">
+            <li>Implemented UiPath solutions that automatically routed and allocated recovered payments from inbound emails to appropriate departments within internal ERP systems.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Designed end-to-end invoice processing automations that reduced manual effort, improved processing accuracy, accelerated response times, and lowered operational costs.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dates">July 2018 – February 2020</div>
+          <div class="exp-company">Sogeti</div>
+          <div class="exp-role">RPA Developer Consultant</div>
+          <ul class="exp-bullets">
+            <li>Secured sensitive employee information by integrating SOAP APIs to transfer records into protected storage environments, eliminating robot access to PII.</li>
+            <li>Developed Access and SQL database solutions to capture, store, and manage transactional data supporting robotic process execution.</li>
+          </ul>
+          <div class="exp-accomplishments">
+            <div class="exp-accomplishments-label">Key Accomplishments</div>
+            <ul class="exp-bullets">
+              <li>Optimized invoice processing accuracy by training and validating ABBYY OCR models for intelligent document extraction.</li>
+              <li>Leveraged Azure Cognitive Services to automate speech transcription and language translation.</li>
+              <li>Centralized transportation logistics, employee, and corporate data into a unified repository to support accident investigations and enterprise reporting.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION & CERTS ── -->
+  <section id="edu" class="section">
+    <div class="section-inner">
+      <h2 class="section-heading">Education</h2>
+      <div class="edu-grid">
+
+        <div class="edu-block">
+          <h3>Degrees</h3>
+          <div class="edu-entry">
+            <div class="edu-degree">Master of Science, Data Science</div>
+            <div class="edu-school">University of Illinois at Urbana-Champaign</div>
+          </div>
+          <div class="edu-entry">
+            <div class="edu-degree">Bachelor of Science, Computer Science</div>
+            <div class="edu-school">Tarleton State University</div>
+          </div>
+        </div>
+
+        <div class="edu-block">
+          <h3>Certifications</h3>
+          <div class="cert-entry">
+            <div class="cert-icon aws">AWS</div>
+            <div class="cert-name">Certified Solutions Architect – Associate</div>
+          </div>
+          <div class="cert-entry">
+            <div class="cert-icon azure">AZ</div>
+            <div class="cert-name">Azure Data Scientist Associate</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TECHNOLOGIES ── -->
+  <section id="technologies" class="section">
+    <div class="section-inner">
+      <h2 class="section-heading">Technologies</h2>
+
+      <div class="tech-tabs">
+        <button class="tech-tab-btn active" onclick="switchTech('ai', event)">AI</button>
+        <button class="tech-tab-btn" onclick="switchTech('data-analysis', event)">Data Analysis</button>
+        <button class="tech-tab-btn" onclick="switchTech('data-viz', event)">Data Visualization</button>
+        <button class="tech-tab-btn" onclick="switchTech('ml', event)">Analytics &amp; ML</button>
+        <button class="tech-tab-btn" onclick="switchTech('cloud', event)">Cloud &amp; Data Platforms</button>
+        <button class="tech-tab-btn" onclick="switchTech('other', event)">Others</button>
+      </div>
+
+      <!-- AI -->
+      <div class="tech-panel active" id="tech-ai">
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#D97757"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="white" font-family="sans-serif" font-weight="bold">A</text></svg>Claude</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="#181717"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub Copilot</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 17 Q6 11 12 14 Q18 17 22 11" stroke="#0EA5E9" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M2 12 Q6 6 12 9 Q18 12 22 6" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/></svg>Windsurf</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2z" fill="#6366F1"/><path d="M8 10h8M8 13h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>Prompt Engineering</span>
+      </div>
+
+      <!-- Data Analysis -->
+      <div class="tech-panel" id="tech-data-analysis">
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.89S0 5.789 0 11.969c0 6.18 3.403 5.963 3.403 5.963h2.031v-2.869s-.109-3.402 3.351-3.402h5.768s3.24.052 3.24-3.13V3.13S18.28 0 11.914 0zm-3.21 1.814a1.051 1.051 0 1 1 0 2.104 1.051 1.051 0 0 1 0-2.104z" fill="#366A96"/><path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.131S24 18.211 24 12.031c0-6.18-3.403-5.963-3.403-5.963h-2.031v2.869s.109 3.402-3.351 3.402H9.447s-3.24-.052-3.24 3.13V20.87S5.72 24 12.086 24zm3.21-1.814a1.051 1.051 0 1 1 0-2.104 1.051 1.051 0 0 1 0 2.104z" fill="#FFC331"/></svg>Python</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="3" height="18" rx="1" fill="#130754"/><rect x="10.5" y="7" width="3" height="14" rx="1" fill="#E70488"/><rect x="18" y="1" width="3" height="20" rx="1" fill="#130754"/></svg>Pandas</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="8" height="8" rx="1" fill="#4DABCF"/><rect x="14" y="2" width="8" height="8" rx="1" fill="#4DABCF" opacity="0.7"/><rect x="2" y="14" width="8" height="8" rx="1" fill="#4DABCF" opacity="0.7"/><rect x="14" y="14" width="8" height="8" rx="1" fill="#4DABCF" opacity="0.4"/></svg>NumPy</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F89939"/><path d="M7 12 Q12 6 17 12 Q12 18 7 12Z" fill="white"/></svg>scikit-learn</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3" fill="#336791"/><path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5" fill="#336791" opacity="0.7"/><ellipse cx="12" cy="5" rx="9" ry="3" fill="#336791"/><path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3" stroke="white" stroke-width="0.8" fill="none"/></svg>SQL</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#217346"/><path d="M7 7l10 10M17 7L7 17" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>Excel</span>
+      </div>
+
+      <!-- Data Visualization -->
+      <div class="tech-panel" id="tech-data-viz">
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="10" y="2" width="4" height="10" rx="1" fill="#E8762D"/><rect x="10" y="14" width="4" height="8" rx="1" fill="#E8762D" opacity="0.6"/><rect x="2" y="10" width="10" height="4" rx="1" fill="#5B9BD5"/><rect x="14" y="10" width="8" height="4" rx="1" fill="#5B9BD5" opacity="0.6"/></svg>Tableau</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="2,18 7,10 12,14 17,6 22,9" stroke="#3F4F75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="2" cy="18" r="1.5" fill="#3F4F75"/><circle cx="7" cy="10" r="1.5" fill="#3F4F75"/><circle cx="12" cy="14" r="1.5" fill="#3F4F75"/><circle cx="17" cy="6" r="1.5" fill="#3F4F75"/><circle cx="22" cy="9" r="1.5" fill="#3F4F75"/></svg>Plotly</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 12 Q5 4 8 12 Q11 20 14 12 Q17 4 20 12 Q21.5 16 22 12" stroke="#11557C" stroke-width="2" stroke-linecap="round" fill="none"/></svg>Matplotlib</span>
+      </div>
+
+      <!-- Analytics & ML -->
+      <div class="tech-panel" id="tech-ml">
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="4" cy="18" r="2" fill="#6366F1"/><circle cx="9" cy="14" r="2" fill="#6366F1"/><circle cx="14" cy="10" r="2" fill="#6366F1"/><circle cx="20" cy="5" r="2" fill="#6366F1"/><line x1="2" y1="20" x2="22" y2="4" stroke="#6366F1" stroke-width="1.5" stroke-dasharray="3 2"/></svg>Regression</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="2" fill="#3B82F6"/><circle cx="11" cy="6" r="2" fill="#3B82F6"/><circle cx="9" cy="11" r="2" fill="#3B82F6"/><circle cx="15" cy="16" r="2" fill="#EF4444"/><circle cx="19" cy="14" r="2" fill="#EF4444"/><circle cx="17" cy="19" r="2" fill="#EF4444"/></svg>Classification</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="7" r="2.5" fill="#10B981"/><circle cx="10" cy="5" r="2.5" fill="#10B981"/><circle cx="8" cy="11" r="2.5" fill="#10B981"/><circle cx="17" cy="16" r="2.5" fill="#F59E0B"/><circle cx="20" cy="13" r="2.5" fill="#F59E0B"/></svg>Clustering</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><line x1="3" y1="21" x2="21" y2="3" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/><polyline points="15,3 21,3 21,9" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="7" cy="17" r="1.5" fill="#8B5CF6" opacity="0.6"/><circle cx="12" cy="12" r="1.5" fill="#8B5CF6" opacity="0.6"/><circle cx="17" cy="7" r="1.5" fill="#8B5CF6" opacity="0.6"/></svg>PCA</span>
+      </div>
+
+      <!-- Cloud -->
+      <div class="tech-panel" id="tech-cloud">
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#E25444"/><path d="M12 4L7 8h10L12 4z" fill="white"/><rect x="7" y="8" width="10" height="9" rx="1" fill="white" opacity="0.9"/><rect x="10" y="11" width="4" height="3" rx="0.5" fill="#E25444"/></svg>AWS S3</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#E8861B"/><text x="12" y="17" text-anchor="middle" font-size="14" fill="white" font-family="serif">λ</text></svg>Lambda</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#E25444"/><rect x="4" y="6" width="16" height="5" rx="1" fill="white"/><rect x="4" y="13" width="16" height="5" rx="1" fill="white" opacity="0.7"/><circle cx="18" cy="8.5" r="1" fill="#E25444"/><circle cx="18" cy="15.5" r="1" fill="#E25444"/></svg>EC2</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#E25444"/><rect x="3" y="3" width="8" height="8" rx="1" fill="white"/><rect x="13" y="3" width="8" height="8" rx="1" fill="white" opacity="0.8"/><rect x="3" y="13" width="8" height="8" rx="1" fill="white" opacity="0.8"/><rect x="13" y="13" width="8" height="8" rx="1" fill="white" opacity="0.6"/></svg>ECS</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#3B48CC"/><ellipse cx="12" cy="8" rx="6" ry="2.5" fill="white"/><path d="M6 8v8c0 1.38 2.686 2.5 6 2.5s6-1.12 6-2.5V8" fill="white" opacity="0.7"/><path d="M6 12c0 1.38 2.686 2.5 6 2.5s6-1.12 6-2.5" stroke="white" stroke-width="0.8" fill="none"/></svg>RDS</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#8C4FFF"/><circle cx="12" cy="12" r="4" fill="white"/><circle cx="12" cy="12" r="2" fill="#8C4FFF"/><rect x="11" y="3" width="2" height="4" rx="1" fill="white"/><rect x="11" y="17" width="2" height="4" rx="1" fill="white"/><rect x="3" y="11" width="4" height="2" rx="1" fill="white"/><rect x="17" y="11" width="4" height="2" rx="1" fill="white"/></svg>Glue</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#8C4FFF"/><circle cx="10" cy="10" r="5" stroke="white" stroke-width="2" fill="none"/><line x1="14" y1="14" x2="20" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>Athena</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13.5 3L6 19.5h13.5L13.5 3z" fill="#0078D4"/><path d="M6 19.5L13.2 9l3.3 5.7L13.5 19.5H6z" fill="#0050A0"/></svg>Azure</span>
+      </div>
+
+      <!-- Others -->
+      <div class="tech-panel" id="tech-other">
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.5" fill="#F05032"/><circle cx="6" cy="18" r="2.5" fill="#F05032"/><circle cx="18" cy="6" r="2.5" fill="#F05032"/><line x1="6" y1="8.5" x2="6" y2="15.5" stroke="#F05032" stroke-width="2"/><path d="M6 8.5 Q6 13 18 8.5" stroke="#F05032" stroke-width="2" fill="none"/></svg>Git</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="#181717"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M11.571 1.143L1.143 11.571a1.22 1.22 0 0 0 0 1.715l10.428 10.428a1.22 1.22 0 0 0 1.715 0l10.428-10.428a1.22 1.22 0 0 0 0-1.715L13.286 1.143a1.22 1.22 0 0 0-1.715 0z" fill="#2684FF"/><path d="M12.428 6.857l-5.57 5.571 5.57 5.572 5.572-5.572z" fill="white" opacity="0.4"/></svg>Jira</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#D33833"/><circle cx="12" cy="10" r="5" fill="white"/><rect x="6" y="9" width="12" height="3" rx="1" fill="#D33833"/><circle cx="10" cy="11" r="1" fill="#333"/><circle cx="14" cy="11" r="1" fill="#333"/></svg>Jenkins</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 0 1 7.32 4.77" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" fill="none"/><polyline points="19,5 19.32,8.77 15.55,9.09" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M12 20a8 8 0 0 1-7.32-4.77" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" fill="none"/><polyline points="5,19 4.68,15.23 8.45,14.91" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>Agile</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#000"/><path d="M6 8h8a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h8" stroke="#65A637" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg>Splunk</span>
+        <span class="tech-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" fill="#1CE783"/><text x="12" y="16" text-anchor="middle" font-size="9" fill="#1B1F23" font-family="sans-serif" font-weight="bold">NR</text></svg>New Relic</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact" class="section">
+    <div class="section-inner">
+      <h2 class="section-heading">Contact</h2>
+      <div class="contact-layout">
+
+        <div class="contact-info">
+          <h3>Get In Touch</h3>
+          <p>Open to new opportunities in Software Engineering and Data Engineering. Feel free to reach out via email or connect on LinkedIn.</p>
+          <div class="contact-detail">
+            <a href="mailto:armandousoriano@gmail.com">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              armandousoriano@gmail.com
+            </a>
+            <a href="tel:8176532661">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.56.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+              (817) 653-2661
+            </a>
+          </div>
+          <div class="contact-links">
+            <a href="https://linkedin.com/in/armandousoriano/" target="_blank">LinkedIn</a>
+            <a href="https://devpost.com/ArmSoriano" target="_blank">Devpost</a>
+          </div>
+        </div>
+
+        <div class="contact-info">
+          <h3>Location &amp; Availability</h3>
+          <p>Available for remote and hybrid roles. Open to relocation for the right opportunity.</p>
+          <p>Response time: within 24–48 hours.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>© 2026 Armando Soriano</span>
+      <span>Software Engineer &amp; Data Engineer</span>
+    </div>
+  </section>
+
+  <script>
+    // ── Scroll-triggered section reveal ──
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.section').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // ── Active nav link on scroll ──
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', function() {
+      var scrollY = window.scrollY + 80;
+      sections.forEach(function(section) {
+        if (scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
+          navLinks.forEach(function(link) { link.style.color = ''; });
+          var active = document.querySelector('.nav-links a[href="#' + section.id + '"]');
+          if (active) active.style.color = 'var(--accent)';
+        }
+      });
+    });
+
+    // ── Technology tabs ──
+    function switchTech(id, e) {
+      document.querySelectorAll('.tech-tab-btn').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      document.querySelectorAll('.tech-panel').forEach(function(panel) {
+        panel.classList.remove('active');
+      });
+      e.currentTarget.classList.add('active');
+      document.getElementById('tech-' + id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
